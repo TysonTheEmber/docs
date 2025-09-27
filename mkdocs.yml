@@ -1,0 +1,68 @@
+site_name: TysonTheEmber's Docs
+site_url: https://tysontheember.github.io
+theme:
+
+  name: material
+  font:
+    text: Merriweather Sans
+    code: Red Hat Mono
+  icon:
+    logo: material/fire
+  favicon: assets/embers_chat_neon.svg
+  features:
+    - navigation.footer
+    - navigation.tabs
+    - content.code.copy
+  palette:
+    # Dark Mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
+      primary: red
+      accent: deep orange
+
+    # Light Mode
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+      primary: blue
+      accent: deep orange
+
+markdown_extensions:
+  - md_in_html
+  - pymdownx.emoji
+  - tables
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+
+extra:
+  social:
+    - icon: simple/youtube
+      link: https://youtube.com/@tysontheember
+    - icon: simple/discord
+      link: https://discord.gg/GCN2Hv4Qzr
+    - icon: simple/curseforge
+      link: https://www.curseforge.com/members/tysontheember/projects
+    - icon: simple/modrinth
+      link: https://modrinth.com/user/TysonTheEmber
+
+copyright: Copyright &copy; 2025 TysonTheEmber
