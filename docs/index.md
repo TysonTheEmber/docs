@@ -7,6 +7,11 @@ description: "Central hub for my Minecraft mods, docs, and releases with quick l
 Welcome to my wiki! This is the central hub for my Minecraft mods, docs, and releases.  
 Use the buttons below to jump straight to downloads, source, and videos.
 
+<div style="font-weight:600">
+  Views: <span id="view-counter">—</span>
+</div>
+
+
 <div class="grid cards" markdown>
 
 - :simple-curseforge: **CurseForge**

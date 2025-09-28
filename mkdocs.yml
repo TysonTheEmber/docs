@@ -62,6 +62,9 @@ plugins:
   - social:
       cards: true
 
+extra_javascript:
+  - assets/js/view-counter.js
+
 extra:
   social:
     - icon: simple/youtube
