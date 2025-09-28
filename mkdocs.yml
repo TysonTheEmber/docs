@@ -62,8 +62,8 @@ plugins:
   - social:
       cards: true
 
-hooks:
-  - hooks.py
+# hooks:
+#   - hooks.py
 
 extra:
   social:
