@@ -62,9 +62,6 @@ plugins:
   - social:
       cards: true
 
-# hooks:
-#   - hooks.py
-
 extra:
   social:
     - icon: simple/youtube
