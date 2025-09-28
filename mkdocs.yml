@@ -60,10 +60,10 @@ plugins:
   - search
   - social:
       cards: true
-      logo: assets/logo-white.svg     # can be SVG or PNG; square works best
-      cards_color:
-        fill: "#ff6a00"               # ember orange
-        text: "#ffffff"
+      cards_layout: default
+      cards_layout_options:
+        background_color: "#ff6a00"   # ember orange
+        color: "#ffffff"              # text color
 
 extra:
   social:
