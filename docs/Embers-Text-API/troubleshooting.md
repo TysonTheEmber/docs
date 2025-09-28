@@ -1,5 +1,10 @@
-# 🛠 Troubleshooting
+---
+title: "🛠 Troubleshooting"
+description: "Resolve missing messages, texture sizing, font loading, and off‑screen text with anchor, offset, wrap, and size guidance."
+image: "/assets/emberstextapi.png"
+---
 
+# 🛠 Troubleshooting
 ### No messages appear
 - Ensure the mod is installed on **both** client and server in multiplayer.
 - Try `/emberstextapi test 1` to verify base rendering.

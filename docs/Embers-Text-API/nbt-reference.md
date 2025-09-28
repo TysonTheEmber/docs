@@ -1,5 +1,10 @@
-# 🧱 NBT Reference (sendcustom)
+---
+title: "🧱 NBT Reference (sendcustom)"
+description: "Comprehensive tags for sendcustom: content and styling, background/border, texture backgrounds, layout/positioning, and effects."
+image: "/assets/emberstextapi.png"
+---
 
+# 🧱 NBT Reference (sendcustom)
 Use these tags inside the `<nbt:compound>` of `/emberstextapi sendcustom`.  
 Types are JSON-like for readability (the command uses Brigadier CompoundTag under the hood).
 

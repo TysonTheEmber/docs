@@ -1,5 +1,10 @@
-# Follow an entity or block
+---
+title: "Follow an entity or block"
+description: "Attach the camera to an entity or block while moving along a path, with examples for entity selectors and block coordinates."
+image: "/assets/apertureapi.png"
+---
 
+# Follow an entity or block
 Lock camera to an entity while moving along a path:
 
 ```

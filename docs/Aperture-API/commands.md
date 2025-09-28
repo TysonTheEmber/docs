@@ -1,5 +1,10 @@
-# 🧭 Commands
+---
+title: "🧭 Commands"
+description: "Command reference for /aperture and /camera with usage, notes, and examples for list, play/reset, import/export, interpolation, and keyframes."
+image: "/assets/apertureapi.png"
+---
 
+# 🧭 Commands
 Aperture ships two roots (as described in the repo README):
 
 - **`/aperture`** — core info & UI

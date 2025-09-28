@@ -1,3 +1,8 @@
+---
+title: "Home"
+description: "Central hub for my Minecraft mods, docs, and releases with quick links to downloads, source code, videos, and Discord community."
+---
+
 # Home
 Welcome to my wiki! This is the central hub for my Minecraft mods, docs, and releases.  
 Use the buttons below to jump straight to downloads, source, and videos.

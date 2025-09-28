@@ -1,5 +1,10 @@
-# 🧭 Commands Reference
+---
+title: "🧭 Commands Reference"
+description: "Command syntax and examples for /emberstextapi test, send, and sendcustom with arguments and NBT links for full control."
+image: "/assets/emberstextapi.png"
+---
 
+# 🧭 Commands Reference
 All commands live under the root: **`/emberstextapi`**.
 
 ## Syntax Overview

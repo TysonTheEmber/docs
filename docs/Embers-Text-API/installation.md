@@ -1,5 +1,10 @@
-# ⚙️ Installation
+---
+title: "⚙️ Installation"
+description: "Requirements and client/server setup, quick demo test command, plus Gradle integration snippet for development."
+image: "/assets/emberstextapi.png"
+---
 
+# ⚙️ Installation
 ## Requirements
 - Minecraft **Forge 1.20.1**
 - Java **17+**

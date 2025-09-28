@@ -1,5 +1,10 @@
-# 📚 Java API Reference
+---
+title: "📚 Java API Reference"
+description: "Overview of Aperture API packages with entry points, CameraPath/Keyframe structures, and enums for interpolation, easing, and handle types."
+image: "/assets/apertureapi.png"
+---
 
+# 📚 Java API Reference
 Packages follow `net.tysontheember.apertureapi` with subpackages like `api`, `client`, `command`, `commands`, `path`, `util` (see repo README).
 
 ## Entry Points (typical)

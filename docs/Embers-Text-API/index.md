@@ -1,5 +1,10 @@
-# 🔥 Embers Text API
+---
+title: "🔥 Embers Text API"
+description: "Lightweight Forge 1.20.1 library for polished, animated text overlays using a fluent Builder API and simple commands or NBT."
+image: "/assets/emberstextapi.png"
+---
 
+# 🔥 Embers Text API
 Embers Text API is a lightweight Forge **1.20.1** library for creating polished, animated text overlays (toasts, popups, hotbar banners, etc.).
 It replaces Immersive Messages with a clean, Forge‑only stack and a fluent **Builder** API.
 

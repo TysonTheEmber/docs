@@ -1,5 +1,10 @@
-# 📖 Tutorials
+---
+title: "📖 Tutorials"
+description: "Index of tutorials: simple popup, textured toast, boss warning, datapack usage, and custom fonts."
+image: "/assets/emberstextapi.png"
+---
 
+# 📖 Tutorials
 - [1. Simple popup above hotbar](./simple-popup.md)
 - [2. Toast with texture background](./textured-toast.md)
 - [3. Boss warning banner (typewriter + shake)](./boss-warning.md)

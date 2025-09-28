@@ -1,5 +1,10 @@
-# Create a path in-game
+---
+title: "Create a path in-game"
+description: "Open the editor, add keyframes, adjust rotation and Bézier handles, preview on the timeline, then save and play the path."
+image: "/assets/apertureapi.png"
+---
 
+# Create a path in-game
 1. `/aperture editor open`  
 2. Add keyframes where you stand. Adjust rotation (hover the rotation gizmo).  
 3. Switch interpolation to **Bézier** for fine control; drag **in/out** handles.  

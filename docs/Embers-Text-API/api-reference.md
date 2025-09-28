@@ -1,5 +1,10 @@
-# 📚 Java API Reference
+---
+title: "📚 Java API Reference"
+description: "Overview of Embers Text API entry points and the ImmersiveMessage builder with common methods, enums, and data‑driven font support."
+image: "/assets/emberstextapi.png"
+---
 
+# 📚 Java API Reference
 The core of Embers Text API is the **`ImmersiveMessage`** builder and the entry-point **`EmbersTextAPI`** network helper.
 
 ## Entry Points

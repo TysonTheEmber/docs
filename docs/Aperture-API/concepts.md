@@ -1,5 +1,10 @@
-# 🧠 Core Concepts
+---
+title: "🧠 Core Concepts"
+description: "Key ideas behind Aperture: paths and keyframes, interpolation modes, playback options (speed, loop, follow), and the in‑game editor with Bézier handles."
+image: "/assets/apertureapi.png"
+---
 
+# 🧠 Core Concepts
 ## Paths
 A **Path** is an ordered list of **Keyframes**. The path’s **Interpolation** (Catmull‑Rom, Bézier, Linear, Cosine, Step) determines how the camera moves between keyframes.
 

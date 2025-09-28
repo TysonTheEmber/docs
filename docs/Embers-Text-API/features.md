@@ -1,5 +1,10 @@
-# ✨ Features (Deep Dive)
+---
+title: "✨ Features (Deep Dive)"
+description: "Deep‑dive into anchors, alignment, colors and gradients, tooltip/texture backgrounds, effects, wrapping, scaling, and fonts."
+image: "/assets/emberstextapi.png"
+---
 
+# ✨ Features (Deep Dive)
 ## Anchoring & Alignment
 - **`anchor(TextAnchor)`** chooses a screen origin; **`align(TextAnchor)`** aligns text box relative to that origin.
 - Use `offset(x,y)` in **pixels** from the anchor to fine-tune.

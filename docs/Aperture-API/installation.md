@@ -1,5 +1,10 @@
-# ⚙️ Installation
+---
+title: "⚙️ Installation"
+description: "Install for Forge 1.20.1 (Java 17). Client/server layout, dev Gradle tasks, and quick verification using /aperture and /camera."
+image: "/assets/apertureapi.png"
+---
 
+# ⚙️ Installation
 ## Requirements
 - Minecraft **Forge 1.20.1**
 - Java **17**

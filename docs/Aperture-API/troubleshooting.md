@@ -1,5 +1,10 @@
-# 🛠 Troubleshooting
+---
+title: "🛠 Troubleshooting"
+description: "Fix editor UI, snapping or uneven motion, follow drift, and JSON import issues with schema validation and path/permission checks."
+image: "/assets/apertureapi.png"
+---
 
+# 🛠 Troubleshooting
 **Editor not opening**  
 - Ensure mod is installed on client. Try `/aperture editor toggle`.
 

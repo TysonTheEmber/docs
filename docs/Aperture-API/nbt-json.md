@@ -1,5 +1,10 @@
-# 🧱 JSON / NBT Schema
+---
+title: "🧱 JSON / NBT Schema"
+description: "Canonical JSON schema for camera paths: top‑level fields, follow object, keyframe format, and Bézier handle types for interpolation."
+image: "/assets/apertureapi.png"
+---
 
+# 🧱 JSON / NBT Schema
 Aperture paths can be imported/exported as **JSON** (and possibly NBT for tighter integration). The canonical JSON form is:
 
 ```json
