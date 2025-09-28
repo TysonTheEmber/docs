@@ -58,12 +58,12 @@ markdown_extensions:
   
 plugins:
   - search
+  - meta
   - social:
       cards: true
-      cards_layout: default
-      cards_layout_options:
-        background_color: "#ff6a00"   # ember orange
-        color: "#ffffff"              # text color
+
+hooks:
+  - hooks.py
 
 extra:
   social:

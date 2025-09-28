@@ -1,9 +1,3 @@
----
-title: Embers Text API
-description: Lightweight in-game text rendering with styled messages, formatting helpers, and dev-friendly hooks.
-image: docs\assets\emberstextapi.png
----
-
 # 🔥 Embers Text API
 
 Embers Text API is a lightweight Forge **1.20.1** library for creating polished, animated text overlays (toasts, popups, hotbar banners, etc.).
