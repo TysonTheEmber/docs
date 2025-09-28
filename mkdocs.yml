@@ -1,5 +1,5 @@
 site_name: Project Ember Documentation
-site_url: https://tysontheember.github.io
+site_url: https://tysontheember.github.io/docs/
 theme:
 
   name: material
@@ -55,6 +55,15 @@ markdown_extensions:
       alternate_style: true
   - admonition
   - pymdownx.details
+  
+plugins:
+  - search
+  - social:
+      cards: true
+      logo: assets/logo-white.svg     # can be SVG or PNG; square works best
+      cards_color:
+        fill: "#ff6a00"               # ember orange
+        text: "#ffffff"
 
 extra:
   social:
@@ -66,5 +75,6 @@ extra:
       link: https://www.curseforge.com/members/tysontheember/projects
     - icon: simple/modrinth
       link: https://modrinth.com/user/TysonTheEmber
+
 
 copyright: Copyright &copy; 2025 TysonTheEmber
