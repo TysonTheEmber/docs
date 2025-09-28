@@ -1,4 +1,4 @@
-site_name: TysonTheEmber's Docs
+site_name: Project Ember Documentation
 site_url: https://tysontheember.github.io
 theme:
 
@@ -6,9 +6,8 @@ theme:
   font:
     text: Merriweather Sans
     code: Red Hat Mono
-  icon:
-    logo: material/fire
-  favicon: assets/embers_chat_neon.svg
+  logo: assets/logo-white.svg
+  favicon: assets/logo-white.svg
   features:
     - navigation.footer
     - navigation.tabs
@@ -19,16 +18,19 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Dark mode
-      primary: red
-      accent: deep orange
+      primary: deep orange
+      accent: amber
 
     # Light Mode
     - scheme: default
       toggle:
         icon: material/weather-night
         name: Light mode
-      primary: blue
-      accent: deep orange
+      primary: deep orange
+      accent: orange
+
+extra_css:
+  - assets/stylesheets/fire.css
 
 markdown_extensions:
   - md_in_html

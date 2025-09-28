@@ -10,6 +10,6 @@
 
 ## What you can build
 - Smooth timelapses with constant velocity along **Catmull‑Rom** curves
-- Precise **Bézier** shots using in‑game handles/gizmo
+- Precise shots using in‑game handles/gizmo
 - Cinematics that follow a **player/entity** or lock to a **block position**
 - Datapack‑driven camera sequences using **JSON paths** and `/camera play`

@@ -1,0 +1,85 @@
+/* Fire theme overrides - simple, subtle, and fast */
+
+/* Global brand colors via CSS variables (works with Material) */
+:root {
+  /* Deep Orange 700 */
+  --md-primary-fg-color: #D84315;
+  /* Orange 600 / Amber-ish accent */
+  --md-accent-fg-color: #FF6F00;
+}
+
+/* Dark scheme tweaks */
+[data-md-color-scheme="slate"] {
+  /* Slightly warmer content background contrast */
+  --md-default-bg-color: #0f0f10;
+  /* Slightly brighter warm code block background */
+  --md-code-bg-color: #1a1412;
+}
+
+/* Header glow for titles */
+.md-typeset h1,
+.md-typeset h2 {
+  text-shadow: 0 0 0.5rem rgba(255, 87, 34, 0.15);
+}
+
+/* Warm link accents */
+.md-typeset a {
+  color: #ff6f00;
+}
+.md-typeset a:hover,
+.md-typeset a:focus {
+  color: #ff8f00;
+  text-decoration-color: #ff6f00;
+}
+
+/* Navigation header: subtle ember underline + darker background */
+.md-header {
+  background-color: #bf360c; /* Deep Orange 800 */
+  border-bottom: 2px solid rgba(255, 111, 0, 0.35);
+  box-shadow: 0 2px 0 rgba(255, 111, 0, 0.15);
+}
+
+/* Active tab highlight with warm gradient */
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  background: linear-gradient(90deg, rgba(255,111,0,0.12), rgba(216,67,21,0.12));
+  border-radius: 0.25rem;
+}
+
+/* Match tabs bar to header: darker background */
+.md-tabs {
+  background-color: #bf360c; /* Deep Orange 800 */
+}
+
+/* Admonitions: warm left border */
+.md-typeset .admonition,
+.md-typeset details {
+  border-left: 0.25rem solid rgba(255, 111, 0, 0.6);
+}
+
+/* Code blocks: ember glow */
+.md-typeset pre > code {
+  box-shadow: 0 0 1rem rgba(216, 67, 21, 0.18);
+}
+/* Ensure fenced code uses darker background */
+.md-typeset pre {
+  background-color: var(--md-code-bg-color);
+}
+
+/* Inline code: warmer background (exclude fenced code) */
+.md-typeset :not(pre) > code {
+  background-color: rgba(255, 111, 0, 0.08);
+}
+
+/* Selection highlight in content */
+::selection {
+  background: rgba(255, 111, 0, 0.35);
+}
+
+/* Footer links warmer hover */
+.md-footer a:hover {
+  color: #ff8f00;
+}
+.md-logo {
+  color: #fff;
+}
