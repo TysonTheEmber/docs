@@ -1,10 +1,10 @@
 ---
-title: "📝 Embers Text API — Commands & NBT Reference"
+title: "📝 Commands & NBT Reference"
 description: "Full documentation for /emberstextapi commands (test, send, sendcustom) plus NBT schema for custom messages, styling, backgrounds, layout, and effects."
 image: "/assets/emberstextapi.png"
 ---
 
-# 📝 Embers Text API — Commands & NBT Reference
+# 📝 Commands & NBT Reference
 
 This page combines the full command reference and the NBT schema for `/emberstextapi sendcustom` into one place.
 
