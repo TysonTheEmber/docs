@@ -1,10 +1,19 @@
-// Global header counter using simplecount API (no login required)
+// Header view counter with per-session increment + number abbreviation
 (function () {
-  const ENDPOINT = 'https://api.simplecounterapi.com/count';
-  const SITE_KEY = 'tysontheember-docs'; // choose a unique key name
+  const ENDPOINT = 'https://script.google.com/macros/s/AKfycby3Wz5nb-aiTRMjLQtAE81pv4cgtqo6GwcIpRzHXe1i/dev';   // e.g. https://script.google.com/macros/s/AKfycby3Wz5nb-aiTRMjLQtAE81pv4cgtqo6GwcIpRzHXe1i/dev
+  const KEY = 'global';                        // single total for whole site
 
   const ID_WRAP = 'pe-views-header';
   const ID_VALUE = 'view-counter';
+  const LAST_VAL_KEY = 'vc:last:value';        // stored across sessions
+  const SESSION_HIT_KEY = 'vc:session:hit';    // resets when browser is closed
+
+  // Format numbers as 1.2k, 3.4m, etc.
+  function formatNumber(n) {
+    if (n >= 1_000_000) return (n / 1_000_000).toFixed(n >= 10_000_000 ? 0 : 1) + "m";
+    if (n >= 1_000) return (n / 1_000).toFixed(n >= 10_000 ? 0 : 1) + "k";
+    return String(n);
+  }
 
   function ensureHeaderCounter() {
     const inner = document.querySelector('.md-header .md-header__inner');
@@ -23,32 +32,44 @@
 
   function setNumber(n) {
     const el = document.getElementById(ID_VALUE) || ensureHeaderCounter();
-    if (el) el.textContent = Number(n || 0).toLocaleString();
+    if (el) el.textContent = formatNumber(n || 0);
   }
 
-  async function hit() {
+  async function fetchJSON(url) {
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }
+
+  async function init() {
+    // Show last known value right away
+    setNumber(parseInt(localStorage.getItem(LAST_VAL_KEY) || '0', 10));
+
     try {
-      // Increment & get current total
-      const res = await fetch(`${ENDPOINT}?key=${SITE_KEY}`, { method: 'POST' });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const data = await res.json();
-      if (typeof data?.count === 'number') {
-        setNumber(data.count);
-        localStorage.setItem('vc:last', String(data.count));
+      // Peek current value (no increment)
+      const peek = await fetchJSON(`${ENDPOINT}?key=${encodeURIComponent(KEY)}&peek=1`);
+      if (typeof peek?.value === 'number') {
+        setNumber(peek.value);
+        localStorage.setItem(LAST_VAL_KEY, String(peek.value));
       }
-    } catch (e) {
-      // fallback: show cached number
-      const last = localStorage.getItem('vc:last');
-      if (last) setNumber(parseInt(last, 10));
+    } catch { /* ignore peek failures */ }
+
+    // Only increment if not already counted in this session
+    if (!sessionStorage.getItem(SESSION_HIT_KEY)) {
+      try {
+        const hit = await fetchJSON(`${ENDPOINT}?key=${encodeURIComponent(KEY)}`); // increments
+        if (typeof hit?.value === 'number') {
+          setNumber(hit.value);
+          localStorage.setItem(LAST_VAL_KEY, String(hit.value));
+          sessionStorage.setItem(SESSION_HIT_KEY, '1');
+        }
+      } catch { /* ignore increment failures */ }
     }
   }
 
-  // Show last known value immediately
-  setNumber(parseInt(localStorage.getItem('vc:last') || '0', 10));
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { ensureHeaderCounter(); hit(); });
+    document.addEventListener('DOMContentLoaded', () => { ensureHeaderCounter(); init(); });
   } else {
-    ensureHeaderCounter(); hit();
+    ensureHeaderCounter(); init();
   }
 })();
