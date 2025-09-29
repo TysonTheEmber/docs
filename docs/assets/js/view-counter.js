@@ -1,23 +1,20 @@
-// Global counter shown in the Material header (no Jinja overrides)
+// Global header counter using simplecount API (no login required)
 (function () {
-  const NAMESPACE = 'tysontheember_docs';
-  const KEY = 'global'; // one shared counter
+  const ENDPOINT = 'https://api.simplecounterapi.com/count';
+  const SITE_KEY = 'tysontheember-docs'; // choose a unique key name
+
   const ID_WRAP = 'pe-views-header';
   const ID_VALUE = 'view-counter';
 
   function ensureHeaderCounter() {
-    // Material header container
     const inner = document.querySelector('.md-header .md-header__inner');
     if (!inner) return null;
-
-    // Reuse if already present
     let wrap = document.getElementById(ID_WRAP);
     if (!wrap) {
       wrap = document.createElement('div');
       wrap.id = ID_WRAP;
       wrap.className = 'pe-views pe-views--header';
-      wrap.innerHTML = '<strong>Views:</strong> <span id="' + ID_VALUE + '">0</span>';
-      // push to the right side of the header row
+      wrap.innerHTML = `<strong>Views:</strong> <span id="${ID_VALUE}">0</span>`;
       wrap.style.marginLeft = 'auto';
       inner.appendChild(wrap);
     }
@@ -29,29 +26,29 @@
     if (el) el.textContent = Number(n || 0).toLocaleString();
   }
 
-  async function increment() {
+  async function hit() {
     try {
-      const r = await fetch(`https://api.countapi.xyz/hit/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`, { cache: 'no-store' });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      const d = await r.json();
-      if (typeof d?.value === 'number') setNumber(d.value);
-      localStorage.setItem('vc:last', String(d.value));
-    } catch {
-      try {
-        const r = await fetch(`https://api.countapi.xyz/get/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`, { cache: 'no-store' });
-        const d = await r.json();
-        if (typeof d?.value === 'number') setNumber(d.value);
-      } catch {}
+      // Increment & get current total
+      const res = await fetch(`${ENDPOINT}?key=${SITE_KEY}`, { method: 'POST' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      if (typeof data?.count === 'number') {
+        setNumber(data.count);
+        localStorage.setItem('vc:last', String(data.count));
+      }
+    } catch (e) {
+      // fallback: show cached number
+      const last = localStorage.getItem('vc:last');
+      if (last) setNumber(parseInt(last, 10));
     }
   }
 
-  // Fast paint with last known value
+  // Show last known value immediately
   setNumber(parseInt(localStorage.getItem('vc:last') || '0', 10));
 
-  // Ensure node exists, then increment
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { ensureHeaderCounter(); increment(); });
+    document.addEventListener('DOMContentLoaded', () => { ensureHeaderCounter(); hit(); });
   } else {
-    ensureHeaderCounter(); increment();
+    ensureHeaderCounter(); hit();
   }
 })();

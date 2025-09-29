@@ -83,18 +83,17 @@
 .md-logo {
   color: #fff;
 }
-/* header views counter */
 .pe-views--header {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  font-size: .9rem;
-  opacity: .9;
-  padding-left: .75rem;
-  border-left: 1px solid var(--md-default-fg-color--lightest, rgba(255,255,255,.12));
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  font-size:.9rem;
+  opacity:.9;
+  padding-left:.75rem;
+  border-left:1px solid var(--md-default-fg-color--lightest, rgba(255,255,255,.12));
 }
-.pe-views--header strong { font-weight: 600; }
-/* hide on very small screens to avoid crowding */
-@media (max-width: 480px) {
-  .pe-views--header { display: none; }
+.pe-views--header strong { font-weight:600; }
+@media (max-width:480px) {
+  .pe-views--header { display:none; }
 }
+
