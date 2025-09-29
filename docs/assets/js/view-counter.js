@@ -1,11 +1,31 @@
-// Global counter for all pages under /docs/
+// Global counter shown in the Material header (no Jinja overrides)
 (function () {
   const NAMESPACE = 'tysontheember_docs';
-  const KEY = 'global'; // single counter key for all pages
-  const EL_ID = 'view-counter';
+  const KEY = 'global'; // one shared counter
+  const ID_WRAP = 'pe-views-header';
+  const ID_VALUE = 'view-counter';
+
+  function ensureHeaderCounter() {
+    // Material header container
+    const inner = document.querySelector('.md-header .md-header__inner');
+    if (!inner) return null;
+
+    // Reuse if already present
+    let wrap = document.getElementById(ID_WRAP);
+    if (!wrap) {
+      wrap = document.createElement('div');
+      wrap.id = ID_WRAP;
+      wrap.className = 'pe-views pe-views--header';
+      wrap.innerHTML = '<strong>Views:</strong> <span id="' + ID_VALUE + '">0</span>';
+      // push to the right side of the header row
+      wrap.style.marginLeft = 'auto';
+      inner.appendChild(wrap);
+    }
+    return wrap.querySelector('#' + ID_VALUE);
+  }
 
   function setNumber(n) {
-    const el = document.getElementById(EL_ID);
+    const el = document.getElementById(ID_VALUE) || ensureHeaderCounter();
     if (el) el.textContent = Number(n || 0).toLocaleString();
   }
 
@@ -21,14 +41,17 @@
         const r = await fetch(`https://api.countapi.xyz/get/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`, { cache: 'no-store' });
         const d = await r.json();
         if (typeof d?.value === 'number') setNumber(d.value);
-      } catch {/* ignore */}
+      } catch {}
     }
   }
 
-  // Show last known count immediately (fast paint)
-  const last = parseInt(localStorage.getItem('vc:last') || '0', 10);
-  setNumber(last);
+  // Fast paint with last known value
+  setNumber(parseInt(localStorage.getItem('vc:last') || '0', 10));
 
-  // Increment on every load
-  increment();
+  // Ensure node exists, then increment
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => { ensureHeaderCounter(); increment(); });
+  } else {
+    ensureHeaderCounter(); increment();
+  }
 })();

@@ -75,7 +75,7 @@ Use the buttons below to jump straight to downloads, source, and videos.
 ## 🚀 Getting Started
 
 - **Read the docs:**  
-    - [Embers Text API Docs](/Embers-Text-API/)  
-    - [Aperture API Docs](/Aperture-API/)
+    - [Embers Text API Docs](Embers-Text-API/index.md)  
+    - [Aperture API Docs](Aperture-API/index.md)
 - **Report issues:** use the GitHub Issues tabs on each repository.
 - **Contribute:** PRs are welcome!

@@ -1,8 +1,9 @@
 site_name: Project Ember Documentation
 site_url: https://tysontheember.github.io/docs/
+extra_javascript:
+  - assets/js/view-counter.js
 theme:
   name: material
-  custom_dir: overrides
   font:
     text: Merriweather Sans
     code: Red Hat Mono
@@ -61,9 +62,6 @@ plugins:
   - meta
   - social:
       cards: true
-
-extra_javascript:
-  - assets/js/view-counter.js
 
 extra:
   social:
