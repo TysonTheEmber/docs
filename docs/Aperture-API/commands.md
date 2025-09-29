@@ -37,7 +37,7 @@ Aperture ships two roots (as described in the repo README):
 ```
 > Notes  
 > - `path` refers to a stored path by name (e.g., `"intro_flyover"`).  
-> - `target` accepts selectors (`@p`, `@a`, names).  
+> - `target` accepts selectors/players (`@p`, `@a`, `@s`(if ran by player), player names).  
 > - `follow` accepts an entity selector or a block position (`x y z`).  
 > - Import/export paths resolve to a per‑world or server path folder.
 
