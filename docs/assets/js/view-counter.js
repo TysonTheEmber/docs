@@ -1,31 +1,45 @@
-// Header view counter (per-session) using Apps Script JSONP (no CORS issues)
 (function () {
-  const ENDPOINT = 'https://script.google.com/macros/s/AKfycby3Wz5nb-aiTRMjLQtAE81pv4cgtqo6GwcIpRzHXe1i/dev'; // <-- your /exec URL here
-  const KEY = 'global'; // single total for whole site
+  const ENDPOINT = 'https://script.google.com/macros/s/AKfycby3Wz5nb-aiTRMjLQtAE81pv4cgtqo6GwcIpRzHXe1i/dev';
+  const KEY = 'global';
+  const REQUIRED_VISIBLE_MS = 30 * 1000;       // 30 seconds
+  const WINDOW_MS = 24 * 60 * 60 * 1000;       // 24 hours
 
   const ID_WRAP = 'pe-views-header';
   const ID_VALUE = 'view-counter';
-  const LAST_VAL_KEY = 'vc:last:value';     // keep last known for fast paint (localStorage)
-  const SESSION_HIT_KEY = 'vc:session:hit'; // per-session marker (sessionStorage)
+  const LS_LAST_VAL = 'vc:last:value';
+  const LS_UUID     = 'vc:uuid';
+  const LS_LAST_HIT = 'vc:last:hit';
 
-  // Abbreviate 1.2k / 3.4m (one decimal when needed)
+  // abbreviate like 1.2k / 3.4m / 1.0b
   function fmt(n) {
-    if (n >= 1e9) return (Math.round((n / 1e9) * 10) / 10) + 'b';
-    if (n >= 1e6) return (Math.round((n / 1e6) * 10) / 10) + 'm';
-    if (n >= 1e3) return (Math.round((n / 1e3) * 10) / 10) + 'k';
+    if (n >= 1e9) return (Math.round(n / 1e8) / 10) + 'b';
+    if (n >= 1e6) return (Math.round(n / 1e5) / 10) + 'm';
+    if (n >= 1e3) return (Math.round(n / 1e2) / 10) + 'k';
     return String(n);
   }
 
-  // Minimal JSONP loader
+  function uuid() {
+    let u = localStorage.getItem(LS_UUID);
+    if (!u) {
+      // RFC4122-ish random id (good enough)
+      u = ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,c=>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      );
+      localStorage.setItem(LS_UUID, u);
+    }
+    return u;
+  }
+
+  // JSONP loader
   function jsonp(url) {
     return new Promise((resolve, reject) => {
       const cb = 'vcb_' + Math.random().toString(36).slice(2);
-      const cleanup = () => { delete window[cb]; script.remove(); };
-      window[cb] = (data) => { resolve(data); cleanup(); };
-      const script = document.createElement('script');
-      script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb;
-      script.onerror = () => { reject(new Error('JSONP failed')); cleanup(); };
-      document.head.appendChild(script);
+      const s = document.createElement('script');
+      const cleanup = () => { delete window[cb]; s.remove(); };
+      window[cb] = (data) => { cleanup(); resolve(data); };
+      s.onerror = () => { cleanup(); reject(new Error('JSONP failed')); };
+      s.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb;
+      document.head.appendChild(s);
     });
   }
 
@@ -45,39 +59,87 @@
   }
 
   function setNumber(n) {
-    const el = document.getElementById(ID_VALUE) || ensureHeaderCounter();
-    if (el) el.textContent = fmt(Number(n || 0));
+    (document.getElementById(ID_VALUE) || ensureHeaderCounter()).textContent = fmt(Number(n || 0));
   }
 
-  async function init() {
-    // Fast paint
-    setNumber(parseInt(localStorage.getItem(LAST_VAL_KEY) || '0', 10));
+  // fast paint from cache
+  setNumber(parseInt(localStorage.getItem(LS_LAST_VAL) || '0', 10));
 
-    // 1) Peek (no increment) to show up-to-date value
+  // Only allow one increment per 24h (client-side guard; server enforces too)
+  function canIncrementNow(now) {
+    const last = parseInt(localStorage.getItem(LS_LAST_HIT) || '0', 10) || 0;
+    return !last || (now - last) > WINDOW_MS;
+  }
+
+  // Track *visible* time (like YT's "watch for a while" heuristic)
+  let visibleAccum = 0;
+  let lastStamp = document.hidden ? 0 : performance.now();
+
+  function onVisChange() {
+    const now = performance.now();
+    if (!document.hidden && lastStamp === 0) lastStamp = now;
+    if (document.hidden && lastStamp !== 0) {
+      visibleAccum += (now - lastStamp);
+      lastStamp = 0;
+    }
+  }
+  document.addEventListener('visibilitychange', onVisChange, { passive: true });
+
+  // also treat interaction as signal (optional but helpful)
+  let interacted = false;
+  ['mousemove','scroll','keydown','click','touchstart'].forEach(ev =>
+    window.addEventListener(ev, () => { interacted = true; }, { passive: true, once: true })
+  );
+
+  async function peek() {
     try {
-      const peek = await jsonp(`${ENDPOINT}?key=${encodeURIComponent(KEY)}&peek=1`);
-      if (typeof peek?.value === 'number') {
-        setNumber(peek.value);
-        localStorage.setItem(LAST_VAL_KEY, String(peek.value));
+      const data = await jsonp(`${ENDPOINT}?key=${encodeURIComponent(KEY)}&peek=1`);
+      if (typeof data?.value === 'number') {
+        setNumber(data.value);
+        localStorage.setItem(LS_LAST_VAL, String(data.value));
       }
-    } catch { /* ignore */ }
+    } catch {}
+  }
 
-    // 2) Increment only once per session
-    if (!sessionStorage.getItem(SESSION_HIT_KEY)) {
-      try {
-        const hit = await jsonp(`${ENDPOINT}?key=${encodeURIComponent(KEY)}`);
-        if (typeof hit?.value === 'number') {
-          setNumber(hit.value);
-          localStorage.setItem(LAST_VAL_KEY, String(hit.value));
-          sessionStorage.setItem(SESSION_HIT_KEY, '1');
-        }
-      } catch { /* ignore */ }
-    }v
+  async function tryIncrement() {
+    const now = Date.now();
+    if (!canIncrementNow(now)) return;
+
+    // finalize visible time if tab is currently visible
+    if (!document.hidden && lastStamp) {
+      visibleAccum += (performance.now() - lastStamp);
+      lastStamp = performance.now(); // continue tracking
+    }
+
+    const enoughTime = visibleAccum >= REQUIRED_VISIBLE_MS;
+    if (!enoughTime) return;               // require ≥30s visible
+    if (!interacted && REQUIRED_VISIBLE_MS >= 30000) {
+      // optional: require some interaction once; comment out if you don't want it
+      // return;
+    }
+
+    try {
+      const u = uuid();
+      const data = await jsonp(`${ENDPOINT}?key=${encodeURIComponent(KEY)}&uuid=${encodeURIComponent(u)}`);
+      if (typeof data?.value === 'number') {
+        setNumber(data.value);
+        localStorage.setItem(LS_LAST_VAL, String(data.value));
+        localStorage.setItem(LS_LAST_HIT, String(now));
+      }
+    } catch {}
+  }
+
+  // Start: peek immediately, then periodically check if we can increment
+  function start() {
+    ensureHeaderCounter();
+    peek();
+    // check every 5s whether 30s visible has been met
+    setInterval(tryIncrement, 5000);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { ensureHeaderCounter(); init(); });
+    document.addEventListener('DOMContentLoaded', start);
   } else {
-    ensureHeaderCounter(); init();
+    start();
   }
 })();
