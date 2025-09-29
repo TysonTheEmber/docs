@@ -21,8 +21,8 @@ image: "/assets/emberstextapi.png"
 - **Typewriter** reveal via `typewriter(speed[,center])`.
 - **Obfuscation reveal** with `obfuscate`, `obfuscateSpeed` (NBT).
 - **Shakes**:
-  - Whole text: `shake(ShakeType, amp)` or NBT `shakeWave/circle/random`.
-  - Per-character: `charShake(ShakeType, amp)` or NBT `charShakeWave/circle/random`.
+    - Whole text: `shake(ShakeType, amp)` or NBT `shakeWave/circle/random`.
+    - Per-character: `charShake(ShakeType, amp)` or NBT `charShakeWave/circle/random`.
 
 ## Wrapping & Scaling
 - `wrap(px)` wraps the message box; combine with `size` for readability.
