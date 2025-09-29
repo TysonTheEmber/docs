@@ -7,9 +7,9 @@ description: "Central hub for my Minecraft mods, docs, and releases with quick l
 Welcome to my wiki! This is the central hub for my Minecraft mods, docs, and releases.  
 Use the buttons below to jump straight to downloads, source, and videos.
 
-<div class="counter-wrap" style="display:flex;gap:.5rem;align-items:center">
+<div style="display:flex;gap:.5rem;align-items:center">
   <span style="font-weight:600">Views:</span>
-  <span id="view-counter">—</span>
+  <span id="view-counter">0</span>
 </div>
 
 <div class="grid cards" markdown>

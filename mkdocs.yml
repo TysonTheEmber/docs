@@ -1,8 +1,8 @@
 site_name: Project Ember Documentation
 site_url: https://tysontheember.github.io/docs/
 theme:
-
   name: material
+  custom_dir: overrides
   font:
     text: Merriweather Sans
     code: Red Hat Mono
