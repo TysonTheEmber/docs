@@ -1,18 +1,32 @@
-// Header view counter with per-session increment + number abbreviation
+// Header view counter (per-session) using Apps Script JSONP (no CORS issues)
 (function () {
-  const ENDPOINT = 'https://script.google.com/macros/s/AKfycby3Wz5nb-aiTRMjLQtAE81pv4cgtqo6GwcIpRzHXe1i/dev';   // e.g. https://script.google.com/macros/s/AKfycby3Wz5nb-aiTRMjLQtAE81pv4cgtqo6GwcIpRzHXe1i/dev
-  const KEY = 'global';                        // single total for whole site
+  const ENDPOINT = 'https://script.google.com/macros/s/AKfycby3Wz5nb-aiTRMjLQtAE81pv4cgtqo6GwcIpRzHXe1i/dev'; // <-- your /exec URL here
+  const KEY = 'global'; // single total for whole site
 
   const ID_WRAP = 'pe-views-header';
   const ID_VALUE = 'view-counter';
-  const LAST_VAL_KEY = 'vc:last:value';        // stored across sessions
-  const SESSION_HIT_KEY = 'vc:session:hit';    // resets when browser is closed
+  const LAST_VAL_KEY = 'vc:last:value';     // keep last known for fast paint (localStorage)
+  const SESSION_HIT_KEY = 'vc:session:hit'; // per-session marker (sessionStorage)
 
-  // Format numbers as 1.2k, 3.4m, etc.
-  function formatNumber(n) {
-    if (n >= 1_000_000) return (n / 1_000_000).toFixed(n >= 10_000_000 ? 0 : 1) + "m";
-    if (n >= 1_000) return (n / 1_000).toFixed(n >= 10_000 ? 0 : 1) + "k";
+  // Abbreviate 1.2k / 3.4m (one decimal when needed)
+  function fmt(n) {
+    if (n >= 1e9) return (Math.round((n / 1e9) * 10) / 10) + 'b';
+    if (n >= 1e6) return (Math.round((n / 1e6) * 10) / 10) + 'm';
+    if (n >= 1e3) return (Math.round((n / 1e3) * 10) / 10) + 'k';
     return String(n);
+  }
+
+  // Minimal JSONP loader
+  function jsonp(url) {
+    return new Promise((resolve, reject) => {
+      const cb = 'vcb_' + Math.random().toString(36).slice(2);
+      const cleanup = () => { delete window[cb]; script.remove(); };
+      window[cb] = (data) => { resolve(data); cleanup(); };
+      const script = document.createElement('script');
+      script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb;
+      script.onerror = () => { reject(new Error('JSONP failed')); cleanup(); };
+      document.head.appendChild(script);
+    });
   }
 
   function ensureHeaderCounter() {
@@ -32,39 +46,33 @@
 
   function setNumber(n) {
     const el = document.getElementById(ID_VALUE) || ensureHeaderCounter();
-    if (el) el.textContent = formatNumber(n || 0);
-  }
-
-  async function fetchJSON(url) {
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    return res.json();
+    if (el) el.textContent = fmt(Number(n || 0));
   }
 
   async function init() {
-    // Show last known value right away
+    // Fast paint
     setNumber(parseInt(localStorage.getItem(LAST_VAL_KEY) || '0', 10));
 
+    // 1) Peek (no increment) to show up-to-date value
     try {
-      // Peek current value (no increment)
-      const peek = await fetchJSON(`${ENDPOINT}?key=${encodeURIComponent(KEY)}&peek=1`);
+      const peek = await jsonp(`${ENDPOINT}?key=${encodeURIComponent(KEY)}&peek=1`);
       if (typeof peek?.value === 'number') {
         setNumber(peek.value);
         localStorage.setItem(LAST_VAL_KEY, String(peek.value));
       }
-    } catch { /* ignore peek failures */ }
+    } catch { /* ignore */ }
 
-    // Only increment if not already counted in this session
+    // 2) Increment only once per session
     if (!sessionStorage.getItem(SESSION_HIT_KEY)) {
       try {
-        const hit = await fetchJSON(`${ENDPOINT}?key=${encodeURIComponent(KEY)}`); // increments
+        const hit = await jsonp(`${ENDPOINT}?key=${encodeURIComponent(KEY)}`);
         if (typeof hit?.value === 'number') {
           setNumber(hit.value);
           localStorage.setItem(LAST_VAL_KEY, String(hit.value));
           sessionStorage.setItem(SESSION_HIT_KEY, '1');
         }
-      } catch { /* ignore increment failures */ }
-    }
+      } catch { /* ignore */ }
+    }v
   }
 
   if (document.readyState === 'loading') {
