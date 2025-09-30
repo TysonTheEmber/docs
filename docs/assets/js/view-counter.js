@@ -1,23 +1,23 @@
-// Global views (everyone) shown in header, with per-session increment and periodic refresh.
-// Uses Apps Script JSONP (/exec) so there's no CORS issue.
 (function () {
-  const ENDPOINT = 'https://script.google.com/macros/s/AKfycby3Wz5nb-aiTRMjLQtAE81pv4cgtqo6GwcIpRzHXe1i/dev'; // <-- paste your Apps Script /exec URL
-  const KEY = 'global';                     // or per-page: location.pathname.replace(/\/+$/,'') || 'home'
-  const REFRESH_MS = 60 * 1000;             // pull fresh total every 60s so you see others' views
+  const ENDPOINT = 'https://script.google.com/macros/s/AKfycby3Wz5nb-aiTRMjLQtAE81pv4cgtqo6GwcIpRzHXe1i/dev';
+  const KEY = 'global';                     // or per-page: (location.pathname.replace(/\/+$/,'')||'home').toLowerCase()
+  const REFRESH_MS = 15000;                 // refresh global total every 15s
+  const SESSION_HIT_KEY = 'vc:session:hit'; // sessionStorage flag (per tab/window)
+
   const ID_WRAP = 'pe-views-header';
   const ID_VALUE = 'view-counter';
 
-  // Abbreviate totals like 1.2k / 3.4m / 1.0b
-  function fmt(n){
+  // k/m/b abbreviations
+  function fmt(n) {
     if (n >= 1e9) return (Math.round(n/1e8)/10) + 'b';
     if (n >= 1e6) return (Math.round(n/1e5)/10) + 'm';
     if (n >= 1e3) return (Math.round(n/1e2)/10) + 'k';
     return String(n);
   }
 
-  // JSONP helper to avoid CORS
-  function jsonp(url){
-    return new Promise((resolve, reject)=>{
+  // JSONP loader (avoids CORS)
+  function jsonp(url) {
+    return new Promise((resolve, reject) => {
       const cb = 'vcb_' + Math.random().toString(36).slice(2);
       const s = document.createElement('script');
       const cleanup = () => { delete window[cb]; s.remove(); };
@@ -48,50 +48,29 @@
     if (el) el.textContent = fmt(Number(n || 0));
   }
 
-  // Always show the live global total from the server
   async function peek() {
     try {
       const data = await jsonp(`${ENDPOINT}?key=${encodeURIComponent(KEY)}&peek=1`);
       if (typeof data?.value === 'number') setNumber(data.value);
-    } catch {
-      // keep whatever is on screen; try again on next refresh
-    }
+    } catch {}
   }
 
-  // Optional: count once per *browser session* (not every reload)
-  const SESSION_HIT_KEY = 'vc:session:hit';
-  const LS_UUID = 'vc:uuid';
-  function uuid() {
-    let u = localStorage.getItem(LS_UUID);
-    if (!u) {
-      u = ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,c =>
-        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c/4).toString(16)
-      );
-      localStorage.setItem(LS_UUID, u);
-    }
-    return u;
-  }
   async function incrementOncePerSession() {
     if (sessionStorage.getItem(SESSION_HIT_KEY)) return; // already counted this session
     try {
-      const u = uuid();
-      const hit = await jsonp(`${ENDPOINT}?key=${encodeURIComponent(KEY)}&uuid=${encodeURIComponent(u)}`);
-      if (typeof hit?.value === 'number') {
-        setNumber(hit.value);               // show new global total immediately
-        sessionStorage.setItem(SESSION_HIT_KEY, '1');
-      }
-    } catch {
-      // ignore; they will still see the global total via peek/pulls
-    }
+      const hit = await jsonp(`${ENDPOINT}?key=${encodeURIComponent(KEY)}`); // increments
+      if (typeof hit?.value === 'number') setNumber(hit.value);
+      sessionStorage.setItem(SESSION_HIT_KEY, '1');
+    } catch {}
   }
 
   function start() {
     ensureHeaderCounter();
-    // 1) Immediately fetch and display the **global** total everyone shares
+    // 1) Show the current global total immediately
     peek();
-    // 2) Try to count this session once (server-side dedupe still applies)
+    // 2) Increment one time for this tab/window session
     incrementOncePerSession();
-    // 3) Keep refreshing the global total so other viewers’ visits show up
+    // 3) Keep refreshing so others’ new views appear on this screen
     setInterval(peek, REFRESH_MS);
   }
 
