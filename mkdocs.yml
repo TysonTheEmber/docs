@@ -3,7 +3,7 @@ site_url: https://tysontheember.github.io/docs/
 extra_javascript:
   - assets/js/view-counter.js
 nav:
-  - Home: index.md
+  - Home: /docs
   - Embers Text API:
       - Overview: Embers-Text-API/index.md
       - Installation: Embers-Text-API/installation.md
