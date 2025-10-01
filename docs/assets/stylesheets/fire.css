@@ -148,6 +148,7 @@
   display: inline-flex;
   align-items: center;
 }
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16.5rem, 1fr));
@@ -213,4 +214,24 @@
   .card-actions .md-button {
     min-width: calc(50% - 0.5rem);
   }
+}
+/* Enhanced hover color for homepage pill buttons */
+.hero-cta .md-button:hover,
+.hero-cta .md-button:focus,
+.card-actions .md-button:hover,
+.card-actions .md-button:focus,
+.social-grid .md-button:hover,
+.social-grid .md-button:focus {
+  background-color: color-mix(in srgb, var(--md-primary-fg-color) 18%, var(--md-default-bg-color) 82%);
+  color: var(--md-primary-fg-color);
+}
+
+[data-md-color-scheme="slate"] .hero-cta .md-button:hover,
+[data-md-color-scheme="slate"] .hero-cta .md-button:focus,
+[data-md-color-scheme="slate"] .card-actions .md-button:hover,
+[data-md-color-scheme="slate"] .card-actions .md-button:focus,
+[data-md-color-scheme="slate"] .social-grid .md-button:hover,
+[data-md-color-scheme="slate"] .social-grid .md-button:focus {
+  background-color: color-mix(in srgb, var(--md-primary-fg-color) 55%, rgba(15, 15, 16, 0.35));
+  color: color-mix(in srgb, #ffffff 82%, var(--md-primary-fg-color) 18%);
 }
