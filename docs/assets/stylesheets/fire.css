@@ -94,7 +94,6 @@
 @media (max-width:480px){ .pe-views--header{ display:none; } }
 
 /* --- Homepage layout helpers --- */
-
 .hero-cta {
   display: flex;
   flex-wrap: wrap;
