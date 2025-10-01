@@ -94,7 +94,6 @@
 @media (max-width:480px){ .pe-views--header{ display:none; } }
 
 /* --- Homepage layout helpers --- */
-
 .hero-cta {
   display: flex;
   flex-wrap: wrap;
@@ -149,7 +148,6 @@
   display: inline-flex;
   align-items: center;
 }
-
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16.5rem, 1fr));
