@@ -2,6 +2,38 @@ site_name: Project Ember Documentation
 site_url: https://tysontheember.github.io/docs/
 extra_javascript:
   - assets/js/view-counter.js
+nav:
+  - Home: index.md
+  - Embers Text API:
+      - Overview: Embers-Text-API/index.md
+      - Installation: Embers-Text-API/installation.md
+      - Commands & NBT: Embers-Text-API/commands_and_nbt.md
+      - Feature Guide: Embers-Text-API/features.md
+      - Java API: Embers-Text-API/api-reference.md
+      - Tutorials:
+          - Overview: Embers-Text-API/tutorials/index.md
+          - Simple Popup: Embers-Text-API/tutorials/simple-popup.md
+          - Boss Warning: Embers-Text-API/tutorials/boss-warning.md
+          - Custom Fonts: Embers-Text-API/tutorials/custom-fonts.md
+          - Textured Toast: Embers-Text-API/tutorials/textured-toast.md
+          - Datapack Usage: Embers-Text-API/tutorials/datapack-usage.md
+      - Troubleshooting: Embers-Text-API/troubleshooting.md
+  - Aperture API:
+      - Overview: Aperture-API/index.md
+      - Installation: Aperture-API/installation.md
+      - Core Concepts: Aperture-API/concepts.md
+      - Commands: Aperture-API/commands.md
+      - NBT & JSON: Aperture-API/nbt-json.md
+      - Java API: Aperture-API/api-reference.md
+      - Tutorials:
+          - Overview: Aperture-API/tutorials/index.md
+          - Path Editor Basics: Aperture-API/tutorials/path-editor.md
+          - Follow Target: Aperture-API/tutorials/follow-target.md
+          - Constant Speed: Aperture-API/tutorials/constant-speed.md
+          - JSON Import & Play: Aperture-API/tutorials/json-import-play.md
+          - Datapack Usage: Aperture-API/tutorials/datapack-usage.md
+      - Troubleshooting: Aperture-API/troubleshooting.md
+
 theme:
   name: material
   font:
@@ -12,7 +44,17 @@ theme:
   features:
     - navigation.footer
     - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.path
+    - toc.integrate
     - content.code.copy
+    - content.tabs.link
+    - content.action.edit
+    - header.autohide
+    - search.suggest
+    - search.highlight
   palette:
     # Dark Mode
     - scheme: slate
