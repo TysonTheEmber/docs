@@ -45,7 +45,7 @@ Compatibility expansion for mining progression and underground loot.
 <div class="card-actions" markdown>
 <!-- [:material-file-document: Docs](https://github.com/TysonTheEmber/spelunkery_plus#readme){ .md-button target=_blank } -->
 [:material-github: GitHub](https://github.com/TysonTheEmber/spelunkery_plus){ .md-button target=_blank }
-[:simple-modrinth: Modrinth](https://modrinth.com/user/TysonTheEmber){ .md-button target=_blank }
+<!-- [:simple-modrinth: Modrinth](https://modrinth.com/user/TysonTheEmber){ .md-button target=_blank } -->
 [:simple-curseforge: CurseForge](https://www.curseforge.com/minecraft/mc-mods/spelunkery-plus){ .md-button target=_blank }
 </div>
 </div>
