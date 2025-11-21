@@ -49,28 +49,3 @@ Compatibility expansion for mining progression and underground loot.
 [:simple-curseforge: CurseForge](https://www.curseforge.com/minecraft/mc-mods/spelunkery-plus){ .md-button target=_blank }
 </div>
 </div>
-
-<div class="card" markdown>
-### Echoes of Battle
-Immersive boss voice lines and reactive combat messaging.
-
-<div class="card-actions" markdown>
-<!-- [:material-file-document: Docs](https://www.curseforge.com/minecraft/mc-mods/echoes-of-battle){ .md-button target=_blank } -->
-<!-- [:material-github: GitHub](https://github.com/TysonTheEmber){ .md-button target=_blank } -->
-<!-- [:simple-modrinth: Modrinth](https://modrinth.com/user/TysonTheEmber){ .md-button target=_blank } -->
-[:simple-curseforge: CurseForge](https://www.curseforge.com/minecraft/mc-mods/echoes-of-battle){ .md-button target=_blank }
-</div>
-</div>
-
-<div class="card" markdown>
-### EmberCraft: Rekindled
-Signature modpack blending exploration, combat, and cozy automation.
-
-<div class="card-actions" markdown>
-<!-- [:material-file-document: Docs](https://www.curseforge.com/minecraft/modpacks/embercraft-rekindled){ .md-button target=_blank } -->
-<!-- [:material-github: GitHub](https://github.com/TysonTheEmber){ .md-button target=_blank } -->
-<!-- [:simple-modrinth: Modrinth](https://modrinth.com/user/TysonTheEmber){ .md-button target=_blank } -->
-[:simple-curseforge: CurseForge](https://www.curseforge.com/minecraft/modpacks/embercraft-rekindled){ .md-button target=_blank }
-</div>
-</div>
-</div>
