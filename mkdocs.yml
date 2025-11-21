@@ -1,5 +1,7 @@
 site_name: Project Ember Documentation
-site_url: https://docs.tysontheember.dev
+site_url: https://tysontheember.github.io/docs/
+extra_javascript:
+  - assets/js/view-counter.js
 nav:
   - Home: /docs
   - Embers Text API:
